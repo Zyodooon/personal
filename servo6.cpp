@@ -1,5 +1,5 @@
 /*
-サーボモーターが読み取るためにrpmに直して終了している
+サーボモーターに贈る値[rpm]を計算するコード
 */
 
 #include <iostream>
@@ -15,7 +15,7 @@ const int PULSE_POS_MAX  = 2000;
 const int PULSE_STOP     = 1500;
 const int PULSE_REV_MAX  = 1000;
 
-// メカナムロボットの寸法!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//　メカナムの寸法を測って"length","wide","radius"に入れないといけない!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 const double length = 0.2;   // [m]
 const double wide = 0.2;   // [m]
 const double radius = 0.03;  // ホイール半径[m]
@@ -45,6 +45,7 @@ public:
         // 各ホイールの角速度[rad/s]を計算
         double R = length + wide;
         double omega[4];
+        R = R / 2.0; // Rはホイールの中心からロボットの中心までの距離
         omega[0] = (1.0/radius) * (vx - vy - R*wz); // FR
         omega[1] = (1.0/radius) * (vx + vy + R*wz); // FL
         omega[2] = (1.0/radius) * (vx + vy - R*wz); // BR
